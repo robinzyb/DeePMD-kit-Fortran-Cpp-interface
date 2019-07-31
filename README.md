@@ -134,4 +134,16 @@ void compute_nnp(nnp *n,
       // when exit the function, the vector and other local variables destuct automatically
 }
 ```
+#### The compilation
+compile the wrapper
+```
+g++ -c c_wrapper.cpp -I @DEEPMD_HEADER_FILE_PATH -I @TENSORFLOW_HEADER_FILE_PATH -DHIGH_PREC
+```
+compile the c program
+```
+gcc -o call call_potential.c c_wrapper.o -lstdc++ -L @DEEPMD_LIB_FILE_PATH -L @TENSORFLOW_LIB_FILE_PATH -Wl,--no-as-needed -ldeepmd_op -ldeepmd -ltensorflow_cc -ltensorflow_framework -Wl,-rpath,@DEEPMD_LIB_FILE_PATH -Wl,-rpath,@TENSORFLOW_LIB_FILE_PATH
+```
+The PATH is set according to your installation path.
+
+
 
