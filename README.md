@@ -18,15 +18,25 @@ c_wrapper.cpp: C++ code for **wrapping** C++ Function.
 call_potential.c: a simple C program for testing C/C++ Interface.
 
 #### The syntax of header file for Interface
-##### Basic stucture
+
 ```
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-<user writing function called by C>
+<This field is for declaring functions called by C>
 
 #ifdef __cplusplus
 }
 #endif
 ```
+The most important part here is `extern "C"` which ensures the declared function is visible by C program.
+Function declared here should use basic data type called by C (e.g. Int, Double, Pointer..)
+
+#### The syntax of cpp wrapper file for Interface
+
+The motivation of wrapping C++ function to C function is to avoid directly using libraries or functions which C don't have.
+For example, the vector library, the constructor and destructor functions in C++, cannot be used by C.
+
+
+
