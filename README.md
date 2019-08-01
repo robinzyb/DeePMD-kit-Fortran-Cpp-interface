@@ -143,7 +143,7 @@ compile the c program
 ```
 gcc -o call call_potential.c c_wrapper.o -lstdc++ -L @DEEPMD_LIB_FILE_PATH -L @TENSORFLOW_LIB_FILE_PATH -Wl,--no-as-needed -ldeepmd_op -ldeepmd -ltensorflow_cc -ltensorflow_framework -Wl,-rpath,@DEEPMD_LIB_FILE_PATH -Wl,-rpath,@TENSORFLOW_LIB_FILE_PATH
 ```
-The PATH is set according to your installation path.
+The PATH is set according to your installation path. Use the program "call" to use the deepmd through C. The "graph.pb" is a example potential(provided by Feng Wang) used by C program.
 
 
 
