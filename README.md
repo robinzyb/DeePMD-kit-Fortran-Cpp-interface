@@ -143,7 +143,7 @@ compile the c program
 ```
 gcc -o call call_potential.c c_wrapper.o -lstdc++ -L @DEEPMD_LIB_FILE_PATH -L @TENSORFLOW_LIB_FILE_PATH -Wl,--no-as-needed -ldeepmd_op -ldeepmd -ltensorflow_cc -ltensorflow_framework -Wl,-rpath,@DEEPMD_LIB_FILE_PATH -Wl,-rpath,@TENSORFLOW_LIB_FILE_PATH
 ```
-The PATH is set according to your installation path. Use the program "call" to use the deepmd through C. The "graph.pb" is a example potential(provided by Feng Wang) used by C program.
+The PATH is set according to your installation path. Use the program "call" to call the deepmd through C. The "graph.pb" is a example potential(provided by Feng Wang) used by C program.
 
 
 ### Fortran/C Interface coding
@@ -238,4 +238,21 @@ CONTAINS
                                C_LOC(dcoord(1)), C_LOC(datype(1)), C_LOC(dbox(1)))
    END SUBROUTINE
 END MODULE deepmd_wrapper
+```
+
+#### The compilation
+compile the c wrapper
+```
+g++ -c c_wrapper.cpp -I @DEEPMD_HEADER_FILE_PATH -I @TENSORFLOW_HEADER_FILE_PATH -DHIGH_PREC
+```
+compile the fortran wrapper
+```
+gfortran -c deepmd_wrapper.f90
+```
+compile the fortran test program
+```
+gfortran -c fortran_call.f90
+```
+```
+gfortran -o fortran_call c_wrapper.o deepmd_wrapper.o fortran_call.o -lstdc++ -L @DEEPMD_LIB_FILE_PATH -L @TENSORFLOW_LIB_FILE_PATH -Wl,--no-as-needed -ldeepmd_op -ldeepmd -ltensorflow_cc -ltensorflow_framework -Wl,-rpath,@DEEPMD_LIB_FILE_PATH -Wl,-rpath,@TENSORFLOW_LIB_FILE_PATH
 ```
