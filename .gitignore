@@ -1,0 +1,7 @@
+*.tar.gz
+libdeepmd_c/
+core.*
+call
+fortran_call
+*.o
+*.mod
