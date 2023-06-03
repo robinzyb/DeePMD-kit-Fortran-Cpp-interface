@@ -1,5 +1,7 @@
 # DeePMD-kit-Fortran-C-interface
 
+For C++ Interface, please refer to [here](cpp_backup/README.md).
+
 ## A Test Code for constructing Fortran/C Interface of DeePMD-kit
 
 ### Overall
