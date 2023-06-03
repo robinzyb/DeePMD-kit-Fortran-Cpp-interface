@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "c_wrapper.h"
+#include "deepmd/c_api.h"
+
 int main(){
    char model[] = "graph.pb";
-   nnp *n = create_nnp(model);
+   DP_DeepPot *dp = DP_NewDeepPot(model);
    printf("load potential successfully\n");
    double coord[] ={
   3.32633000 ,      2.16018000 ,      8.72841000  , 
@@ -206,12 +207,23 @@ int main(){
    double *atom_ener = (double*)malloc(sizeof(double) * vecsize);
    double *atom_virial = (double*)malloc(sizeof(double) * vecsize * 9);
 
-  compute_nnp(n, &vecsize, &ener,force, virial, atom_ener, atom_virial, &coord[0], &atype[0], &box[0]);
-  printf("the energy is %.7f\n", ener);
-  for (int i=0; i<vecsize*3; i++){
+   DP_DeepPotCompute(
+      dp,
+      vecsize,
+      &coord[0],
+      &atype[0],
+      &box[0],
+      &ener,
+      force,
+      virial,
+      atom_ener,
+      atom_virial
+   );
+   printf("the energy is %.7f\n", ener);
+   for (int i=0; i<vecsize*3; i++){
 	  printf("force[%d]:%f\n",i,force[i]);
-  }
-  for (int i=0; i<vecsize; i++){
+   }
+   for (int i=0; i<vecsize; i++){
 	  printf("atom_ener[%d]:%f\n",i,force[i]);
-  }
+   }
  }

@@ -1,7 +1,8 @@
 program fortran_call
     use deepmd_wrapper
+    use ISO_C_BINDING, only: C_PTR
     implicit none
-    type(nnp) :: pot
+    type(C_PTR), target :: pot
     integer :: vecsize
     integer,target,allocatable :: atype(:)
     real(8), target,allocatable :: coord(:)
@@ -234,16 +235,18 @@ program fortran_call
   2.48104000 ,     10.60930000 ,      6.01716000  ,& 
   11.56800000,       2.38200000,      10.69430000 /)
 
-      dener => ener
-      dforce => force
-      dvirial => virial
-      datom_ener => atom_ener
-      datom_virial => atom_virial
-      dcoord => coord
-      datype => atype
-      dbox => box
-      pot=create_nnp('graph.pb')
-     call compute_nnp(pot%ptr, vecsize, dener, dforce, dvirial, datom_ener, datom_virial, dcoord, datype, dbox)
+    dener => ener
+    dforce => force
+    dvirial => virial
+    datom_ener => atom_ener
+    datom_virial => atom_virial
+    dcoord => coord
+    datype => atype
+    dbox => box
+    pot = dp_deep_pot('graph.pb')
+    call dp_deep_pot_compute(pot, vecsize, &
+        dcoord, datype, dbox, dener, dforce, dvirial, &
+        datom_ener, datom_virial)
       print*, dener
       print*, dforce
       print*, datom_ener
